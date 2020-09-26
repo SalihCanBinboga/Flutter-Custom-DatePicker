@@ -19,6 +19,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           return Container(
             margin: EdgeInsets.only(top: 16),
             child: CalendarWidget(
+              currentDate: DateTime.now(),
               startDate: getDateByPosition(index),
             ),
           );

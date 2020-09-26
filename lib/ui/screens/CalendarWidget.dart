@@ -1,11 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'WeekDaysFirstRow.dart';
 
 class CalendarWidget extends StatefulWidget {
   final DateTime startDate;
+  final DateTime currentDate;
 
-  const CalendarWidget({Key key, this.startDate}) : super(key: key);
+  const CalendarWidget({Key key, this.startDate, this.currentDate}) : super(key: key);
 
   @override
   _CalendarWidgetState createState() => _CalendarWidgetState();
@@ -18,7 +20,6 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   @override
   void initState() {
     monthsTR = List.unmodifiable({"Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"});
-
     super.initState();
   }
 
@@ -65,14 +66,14 @@ class _CalendarWidgetState extends State<CalendarWidget> {
         if (rowPosition == monthStartDay) {
           // query for month first day
 
-          rowItems.add(_fullDay(rowStartDayOnMonth.day));
+          rowItems.add(_fullDay(rowStartDayOnMonth));
           rowStartDayOnMonth = rowStartDayOnMonth.add(Duration(days: 1));
           rowStartDay++;
         } else if (rowPosition > monthStartDay) {
           if (nextMonth.isAfter(rowStartDayOnMonth)) {
             // is next Month ?
 
-            rowItems.add(_fullDay(rowStartDayOnMonth.day));
+            rowItems.add(_fullDay(rowStartDayOnMonth));
             rowStartDayOnMonth = rowStartDayOnMonth.add(Duration(days: 1));
             rowStartDay++;
           } else {
@@ -88,7 +89,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
         if (nextMonth.isAfter(rowStartDayOnMonth)) {
           // is next Month ?
 
-          rowItems.add(_fullDay(rowStartDayOnMonth.day));
+          rowItems.add(_fullDay(rowStartDayOnMonth));
           rowStartDayOnMonth = rowStartDayOnMonth.add(Duration(days: 1));
           rowStartDay++;
         } else {
@@ -99,20 +100,30 @@ class _CalendarWidgetState extends State<CalendarWidget> {
     return rowItems;
   }
 
-  Widget _fullDay(int day) => Expanded(
+  Widget _fullDay(DateTime date) => Expanded(
         child: Container(
-          color: Colors.white,
+          color: isDateToday(date) ? Colors.pink : Colors.white,
           margin: EdgeInsets.all(5),
           height: 32,
           width: 32,
           alignment: Alignment.center,
-          child: Text(
-            day.toString(),
+          child: Text(date.day.toString(),
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            style: TextStyle(color:  isDateToday(date) ? Colors.white : Colors.black, fontWeight: FontWeight.bold),
           ),
         ),
       );
+
+
+  bool isDateToday(DateTime dateTime){
+    dateTime = DateTime(dateTime.year,dateTime.month,dateTime.day);
+    DateTime currentNewDate = DateTime(widget.currentDate.year,widget.currentDate.month,widget.currentDate.day);
+    if(dateTime == currentNewDate){
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   Widget get _emptyDay => Expanded(child: Text("", textAlign: TextAlign.center, style: TextStyle(color: Colors.white)));
 }
