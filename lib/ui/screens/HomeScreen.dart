@@ -10,7 +10,11 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Center(
         child: RaisedButton(
-          onPressed: () => {Navigator.of(context).push(MaterialPageRoute(builder: (context) => CalendarScreen()))},
+          onPressed: () => {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => CalendarScreen())).then(
+                  (value) => print('tarih $value'),
+                )
+          },
           color: Colors.blue,
           child: Text(
             "Takvimi Aç",
