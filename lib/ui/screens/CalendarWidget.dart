@@ -14,11 +14,21 @@ class CalendarWidget extends StatefulWidget {
 
 class _CalendarWidgetState extends State<CalendarWidget> {
   int rowStartDay = 0;
+  List<String> monthsTR;
+
+  @override
+  void initState() {
+    monthsTR = List.unmodifiable({"Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"});
+
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
 
     List<Widget> rows = [];
+    rows.add(dateInfoWidget);
     rows.add(WeekDaysFirstRow());
 
     var rowStartElement = widget.startDate.subtract(Duration(days: widget.startDate.day - 1)); // ayın 1. gününü alır
@@ -35,6 +45,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
 
 
 
+  Widget get dateInfoWidget => Center(child: Text("${monthsTR[widget.startDate.month - 1]} ${widget.startDate.year.toString()}"));
   List<Widget> prepareOneWeek(DateTime rowStartDate, int columnPosition) {
     List<Widget> rowItems = [];
     rowStartDay = 0;
