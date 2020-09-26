@@ -14,22 +14,17 @@ class _CalendarScreenState extends State<CalendarScreen> {
       appBar: AppBar(
         title: Text("Tarih Seçin"),
       ),
-      body: Container(
-          margin: EdgeInsets.only(top: 16),
-          color: Colors.pink,
-          height: MediaQuery.of(context).size.height * .9,
-          width: MediaQuery.of(context).size.width,
-          child: ListView.builder(
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                margin: EdgeInsets.only(top: 8),
-                child: CalendarWidget(
-                  startDate: getDateByPosition(index),
-                ),
-              );
-            },
-            itemCount: getTotalMonth,
-          )),
+      body: ListView.builder(
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+            margin: EdgeInsets.only(top: 16),
+            child: CalendarWidget(
+              startDate: getDateByPosition(index),
+            ),
+          );
+        },
+        itemCount: getTotalMonth,
+      ),
     );
   }
 
