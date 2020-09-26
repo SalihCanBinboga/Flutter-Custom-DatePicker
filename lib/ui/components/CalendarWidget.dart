@@ -19,6 +19,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   @override
   void initState() {
     currentDate = DateTime.now();
+    currentDate = DateTime(currentDate.year,currentDate.month,currentDate.day);
     super.initState();
   }
 
@@ -70,6 +71,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   }
   DateTime getDateByPosition(int monthIndex) {
     DateTime startDate = DateTime.now();
+    startDate = DateTime(startDate.year,startDate.month,startDate.day);
 
     if (monthIndex != 0) {
       startDate = startDate.add(Duration(days: ((monthIndex) * 30)));

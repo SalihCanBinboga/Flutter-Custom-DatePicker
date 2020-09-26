@@ -23,12 +23,16 @@ class _MonthCalendarWidgetState extends State<MonthCalendarWidget> {
   @override
   void initState() {
     monthsTR = List.unmodifiable({"Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"});
-    onTapDate = DateTime(2000,01,01);
+    onTapDate = DateTime(2000, 01, 01);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    return Column(children: createRows());
+  }
+
+  List<Widget> createRows() {
     List<Widget> rows = [];
     rows.add(dateInfoWidget);
     rows.add(SizedBox(height: 8));
@@ -47,13 +51,8 @@ class _MonthCalendarWidgetState extends State<MonthCalendarWidget> {
       rows.add(Row(children: prepareOneWeek(rowStartElement, columnPosition)));
       rowStartElement = rowStartElement.add(Duration(days: rowStartDay));
     }
-
-    return Column(children: rows);
+    return rows;
   }
-
-  Widget get dateInfoWidget => Center(
-        child: Text("${monthsTR[widget.startDate.month - 1]} ${widget.startDate.year.toString()}"),
-      );
 
   List<Widget> prepareOneWeek(DateTime rowStartDate, int columnPosition) {
     List<Widget> rowItems = [];
@@ -106,8 +105,8 @@ class _MonthCalendarWidgetState extends State<MonthCalendarWidget> {
 
   Widget _fullDay(DateTime date) => Expanded(
         child: InkWell(
-          onTap: ()=>{
-            setState((){
+          onTap: () => {
+            setState(() {
               onTapDate = date;
               widget.onSelect(date);
             })
@@ -118,28 +117,28 @@ class _MonthCalendarWidgetState extends State<MonthCalendarWidget> {
             height: 32,
             width: 32,
             alignment: Alignment.center,
-            child: Text(date.day.toString(),
+            child: Text(
+              date.day.toString(),
               textAlign: TextAlign.center,
-              style: TextStyle(color:  isDateToday(date) ? Colors.white : Colors.black, fontWeight: FontWeight.bold),
+              style: TextStyle(color: isDateToday(date) ? Colors.white : Colors.black, fontWeight: FontWeight.bold),
             ),
           ),
         ),
       );
 
-
-
-  bool isDateToday(DateTime rowDateTime){
-    rowDateTime = DateTime(rowDateTime.year,rowDateTime.month,rowDateTime.day);
-    DateTime currentNewDate = DateTime(widget.currentDate.year,widget.currentDate.month,widget.currentDate.day);
+  bool isDateToday(DateTime rowDateTime) {
+    rowDateTime = DateTime(rowDateTime.year, rowDateTime.month, rowDateTime.day);
+    DateTime currentNewDate = DateTime(widget.currentDate.year, widget.currentDate.month, widget.currentDate.day);
     //DateTime tapDateModify = DateTime(onTapDate.year,onTapDate.month,onTapDate.day);
 
-    if(rowDateTime == currentNewDate){
+    if (rowDateTime == currentNewDate) {
       return true;
     } else {
       return false;
     }
-
   }
 
   Widget get _emptyDay => Expanded(child: Text("", textAlign: TextAlign.center, style: TextStyle(color: Colors.white)));
+
+  Widget get dateInfoWidget => Center(child: Text("${monthsTR[widget.startDate.month - 1]} ${widget.startDate.year.toString()}"));
 }

@@ -11,9 +11,10 @@ class HomeScreen extends StatelessWidget {
       body: Center(
         child: RaisedButton(
           onPressed: () => {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => CalendarScreen())).then(
+            /*  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CalendarScreen())).then(
                   (value) => print('tarih $value'),
-                )
+                )*/
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => CalendarScreen())),
           },
           color: Colors.blue,
           child: Text(
