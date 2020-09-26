@@ -28,8 +28,16 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 ),
               );
             },
-            itemCount: 10,
+            itemCount: getTotalMonth,
           )),
     );
   }
+
+  int get getTotalMonth {
+    var addFiveMonthAtNow = DateTime.now().add(Duration(days: 150));
+    var calculatedYear = addFiveMonthAtNow.year - DateTime.now().year;
+    var calculatedMonthCount = 12 * calculatedYear;
+    return calculatedMonthCount + addFiveMonthAtNow.month - DateTime.now().month;
+  }
+
 }
