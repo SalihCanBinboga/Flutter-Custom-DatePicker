@@ -1,13 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'WeekDaysFirstRow.dart';
+
+typedef void OnSelect(DateTime date);
+
 
 class CalendarWidget extends StatefulWidget {
   final DateTime startDate;
   final DateTime currentDate;
+  final OnSelect onSelect;
 
-  const CalendarWidget({Key key, this.startDate, this.currentDate}) : super(key: key);
+  const CalendarWidget({Key key, this.startDate, this.currentDate, this.onSelect}) : super(key: key);
 
   @override
   _CalendarWidgetState createState() => _CalendarWidgetState();
@@ -16,10 +19,12 @@ class CalendarWidget extends StatefulWidget {
 class _CalendarWidgetState extends State<CalendarWidget> {
   int rowStartDay = 0;
   List<String> monthsTR;
+  DateTime onTapDate;
 
   @override
   void initState() {
     monthsTR = List.unmodifiable({"Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"});
+    onTapDate = DateTime(2000,01,01);
     super.initState();
   }
 
@@ -101,28 +106,40 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   }
 
   Widget _fullDay(DateTime date) => Expanded(
-        child: Container(
-          color: isDateToday(date) ? Colors.pink : Colors.white,
-          margin: EdgeInsets.all(5),
-          height: 32,
-          width: 32,
-          alignment: Alignment.center,
-          child: Text(date.day.toString(),
-            textAlign: TextAlign.center,
-            style: TextStyle(color:  isDateToday(date) ? Colors.white : Colors.black, fontWeight: FontWeight.bold),
+        child: InkWell(
+          onTap: ()=>{
+            setState((){
+              onTapDate = date;
+              widget.onSelect(date);
+            })
+          },
+          child: Container(
+            color: isDateToday(date) ? Colors.pink : Colors.white,
+            margin: EdgeInsets.all(5),
+            height: 32,
+            width: 32,
+            alignment: Alignment.center,
+            child: Text(date.day.toString(),
+              textAlign: TextAlign.center,
+              style: TextStyle(color:  isDateToday(date) ? Colors.white : Colors.black, fontWeight: FontWeight.bold),
+            ),
           ),
         ),
       );
 
 
-  bool isDateToday(DateTime dateTime){
-    dateTime = DateTime(dateTime.year,dateTime.month,dateTime.day);
+
+  bool isDateToday(DateTime rowDateTime){
+    rowDateTime = DateTime(rowDateTime.year,rowDateTime.month,rowDateTime.day);
     DateTime currentNewDate = DateTime(widget.currentDate.year,widget.currentDate.month,widget.currentDate.day);
-    if(dateTime == currentNewDate){
+    //DateTime tapDateModify = DateTime(onTapDate.year,onTapDate.month,onTapDate.day);
+
+    if(rowDateTime == currentNewDate){
       return true;
     } else {
       return false;
     }
+
   }
 
   Widget get _emptyDay => Expanded(child: Text("", textAlign: TextAlign.center, style: TextStyle(color: Colors.white)));
