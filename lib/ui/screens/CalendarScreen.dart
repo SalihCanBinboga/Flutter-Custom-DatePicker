@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'CustomCalendar.dart';
+import '../components/CustomCalendar.dart';
 
 class CalendarScreen extends StatefulWidget {
   @override
