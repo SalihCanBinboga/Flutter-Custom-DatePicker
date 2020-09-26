@@ -24,13 +24,23 @@ class _CalendarScreenState extends State<CalendarScreen> {
               return Container(
                 margin: EdgeInsets.only(top: 8),
                 child: CalendarWidget(
-                  startDate: DateTime.now(),
+                  startDate: getDateByPosition(index),
                 ),
               );
             },
             itemCount: getTotalMonth,
           )),
     );
+  }
+
+  DateTime getDateByPosition(int monthIndex) {
+    DateTime startDate = DateTime.now();
+
+    if (monthIndex != 0) {
+      startDate = startDate.add(Duration(days: ((monthIndex) * 30)));
+    }
+
+    return startDate;
   }
 
   int get getTotalMonth {
