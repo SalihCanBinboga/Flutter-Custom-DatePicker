@@ -30,7 +30,11 @@ class _HomeScreenState extends State<HomeScreen> {
         child: RaisedButton(
           onPressed: () => {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) => CalendarScreen())).then(
-                  (dateTime) => _showDate(dateTime),
+                  (dateTime) => {
+                    if(dateTime != null){
+                      _showDate(dateTime)
+                    }
+                  },
                 )
           },
           color: Colors.blue,
