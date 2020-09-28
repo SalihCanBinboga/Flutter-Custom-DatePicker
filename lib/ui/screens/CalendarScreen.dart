@@ -8,13 +8,9 @@ class CalendarScreen extends StatefulWidget {
 }
 
 class _CalendarScreenState extends State<CalendarScreen> {
-
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Tarih Seçin"),
       ),
@@ -22,10 +18,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
         child: CalendarWidget(
           totalAddMonth: 15,
           onResultDate: (DateTime dateTime) {
-            //Navigator.of(context).pop(dateTime);
-            _scaffoldKey.currentState.showSnackBar(SnackBar(
-              content: Text("Seçilen Tarih: $dateTime"),
-            ));
+            Navigator.of(context).pop(dateTime);
           },
         ),
       ),
