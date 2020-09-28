@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'WeekDaysFirstRow.dart';
 
 typedef void OnSelect(DateTime date);
@@ -139,6 +141,5 @@ class _MonthCalendarWidgetState extends State<MonthCalendarWidget> {
   }
 
   Widget get _emptyDay => Expanded(child: Text("", textAlign: TextAlign.center, style: TextStyle(color: Colors.white)));
-
-  Widget get dateInfoWidget => Center(child: Text("${monthsTR[widget.startDate.month - 1]} ${widget.startDate.year.toString()}"));
+  Widget get dateInfoWidget => Center(child: Text(" ${DateFormat(DateFormat.MONTH,Platform.localeName).format(widget.startDate)} ${DateFormat(DateFormat.YEAR,Platform.localeName).format(widget.startDate)}"));
 }

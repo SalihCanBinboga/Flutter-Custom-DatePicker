@@ -1,8 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class WeekDaysFirstRow extends StatelessWidget {
+  void weekNameList (){
+    DateFormat date = DateFormat.yMMM(Platform.localeName);
+    print('test ${date.dateSymbols.STANDALONESHORTWEEKDAYS[1]}');
+  }
+
   @override
   Widget build(BuildContext context) {
+    weekNameList ();
     return Row(
       children: <Widget>[
         Expanded(child: Text("Pzt", textAlign: TextAlign.center, style: textStyle)),
