@@ -19,13 +19,13 @@ class MonthCalendarWidget extends StatefulWidget {
 
 class _MonthCalendarWidgetState extends State<MonthCalendarWidget> {
   int rowStartDay = 0;
-  List<String> monthsTR;
   DateTime onTapDate;
+  DateTime currentDate;
 
   @override
   void initState() {
-    monthsTR = List.unmodifiable({"Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"});
     onTapDate = DateTime(2000, 01, 01);
+    currentDate = DateTime.now().subtract(Duration(days: 1));
     super.initState();
   }
 
@@ -109,12 +109,17 @@ class _MonthCalendarWidgetState extends State<MonthCalendarWidget> {
         child: InkWell(
           onTap: () => {
             setState(() {
-              onTapDate = date;
-              widget.onSelect(date);
+              if (date.isAfter(currentDate)) {
+                onTapDate = date;
+                widget.onSelect(date);
+              }
             })
           },
           child: Container(
-            color: isDateToday(date) ? Colors.pink : Colors.white,
+            decoration: BoxDecoration(
+              color: date.isAfter(currentDate) ? isDateToday(date) ? Colors.pink : Colors.white : Colors.black45,
+              borderRadius: BorderRadius.circular(8),
+            ),
             margin: EdgeInsets.all(5),
             height: 32,
             width: 32,
@@ -122,7 +127,7 @@ class _MonthCalendarWidgetState extends State<MonthCalendarWidget> {
             child: Text(
               date.day.toString(),
               textAlign: TextAlign.center,
-              style: TextStyle(color: isDateToday(date) ? Colors.white : Colors.black, fontWeight: FontWeight.bold),
+              style: TextStyle(color: date.isAfter(currentDate) ? isDateToday(date) ? Colors.white : Colors.black : Colors.white, fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -131,7 +136,6 @@ class _MonthCalendarWidgetState extends State<MonthCalendarWidget> {
   bool isDateToday(DateTime rowDateTime) {
     rowDateTime = DateTime(rowDateTime.year, rowDateTime.month, rowDateTime.day);
     DateTime currentNewDate = DateTime(widget.currentDate.year, widget.currentDate.month, widget.currentDate.day);
-    //DateTime tapDateModify = DateTime(onTapDate.year,onTapDate.month,onTapDate.day);
 
     if (rowDateTime == currentNewDate) {
       return true;
@@ -141,5 +145,8 @@ class _MonthCalendarWidgetState extends State<MonthCalendarWidget> {
   }
 
   Widget get _emptyDay => Expanded(child: Text("", textAlign: TextAlign.center, style: TextStyle(color: Colors.white)));
-  Widget get dateInfoWidget => Center(child: Text(" ${DateFormat(DateFormat.MONTH,Platform.localeName).format(widget.startDate)} ${DateFormat(DateFormat.YEAR,Platform.localeName).format(widget.startDate)}"));
+
+  Widget get dateInfoWidget => Center(
+      child: Text(
+          " ${DateFormat(DateFormat.MONTH, Platform.localeName).format(widget.startDate)} ${DateFormat(DateFormat.YEAR, Platform.localeName).format(widget.startDate)}"));
 }
