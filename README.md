@@ -7,7 +7,7 @@ It is a special date selection screen made with Flutter.
 
 DatePicker Screen             
 |:-------------------------:|
-![SS1]((images/demo.png))
+![SS1](images/demo.png)
 
 
 ## Licence [MIT](https://choosealicense.com/licenses/mit/)
